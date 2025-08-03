@@ -82,9 +82,21 @@ class StockPredictionAPIView(APIView):
             # Scaling down the data between 0 and 1
             scaler = MinMaxScaler(feature_range=(0,1))
 
-            # Load ML Model
+            # Load ML Model with memory optimization
             model_path = os.path.join(settings.BASE_DIR, 'resources', 'stock_prediction_model.keras')
-            model = load_model(model_path)
+            import tensorflow as tf
+            # Limit GPU memory growth to prevent OOM
+            gpus = tf.config.experimental.list_physical_devices('GPU')
+            if gpus:
+                try:
+                    for gpu in gpus:
+                        tf.config.experimental.set_memory_growth(gpu, True)
+                except RuntimeError as e:
+                    print(f"GPU memory growth setting failed: {e}")
+            
+            # Load model with memory optimization
+            model = load_model(model_path, compile=False)
+            model.compile(optimizer='adam', loss='mse')
 
             # Prepare test data
             past_100_days = data_training.tail(100)
