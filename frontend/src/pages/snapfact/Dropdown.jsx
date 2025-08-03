@@ -4,10 +4,14 @@ export function Dropdown({ list, onItemSelect }) {
 	function onListItemSelect(event) {
 		onItemSelect(Number(event.target.value));
 	}
+	
+	// Ensure list is an array and handle undefined/null cases
+	const safeList = Array.isArray(list) ? list : [];
+	
 	return (
 		<Select
 			placeholder={
-				list.length === 0 ? 'Loading...' : 'Choose a category:'
+				safeList.length === 0 ? 'Loading...' : 'Choose a category:'
 			}
 			onChange={onListItemSelect}
 			color='#283237'
@@ -18,7 +22,7 @@ export function Dropdown({ list, onItemSelect }) {
 			boxShadow='0px 4px 8px rgba(73, 89, 99, 0.3)'
 			size={{ base: 'sm', md: 'md' }}
 		>
-			{list.map((each) => {
+			{safeList.map((each) => {
 				return (
 					<option key={each.id} value={each.id}>
 						{each.category_title}

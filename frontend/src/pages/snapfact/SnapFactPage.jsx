@@ -21,10 +21,12 @@ const SnapFactPage = () => {
 	function fetchCategoryList() {
 		getCategoryList()
 			.then((response) => {
+				console.log('Categories response:', response.data);
 				setCategoryList(response.data);
 			})
 			.catch((error) => {
-				console.error(error);
+				console.error('Error fetching categories:', error);
+				setCategoryList([]); // Set empty array on error
 			});
 	}
 
