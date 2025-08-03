@@ -4,23 +4,25 @@ FROM node:18-alpine AS build
 # Set working directory
 WORKDIR /app
 
-# Set Node.js memory limits to prevent OOM
-ENV NODE_OPTIONS="--max-old-space-size=512"
+# Set very aggressive Node.js memory limits for 1GB server
+ENV NODE_OPTIONS="--max-old-space-size=256"
 ENV GENERATE_SOURCEMAP=false
 ENV CI=false
+ENV DISABLE_ESLINT_PLUGIN=true
+ENV FAST_REFRESH=false
 
 # Copy package files first
 COPY package.json ./
 COPY package-lock.json* ./
 
-# Install dependencies with memory optimization
-RUN npm install --omit=dev --no-audit --no-fund --prefer-offline
+# Install dependencies with maximum optimization
+RUN npm install --omit=dev --no-audit --no-fund --prefer-offline --no-optional --production
 
 # Copy source code
 COPY . .
 
-# Build the application with memory optimization
-RUN npm run build:light
+# Build with maximum optimization
+RUN npm run build:ultra
 
 # Stage 2: Serve the application with Nginx
 FROM nginx:alpine
