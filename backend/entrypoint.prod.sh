@@ -29,12 +29,8 @@ echo "Database is ready"
 echo "Running migrations..."
 python manage.py migrate --noinput
 
-echo "Collecting static files..."
-python manage.py collectstatic --noinput || echo "Static files collection failed, continuing..."
-
-echo "Copying media files to static..."
-mkdir -p /app/staticfiles/media
-cp -r /app/media/* /app/staticfiles/media/ 2>/dev/null || echo "Media files copy failed, continuing..."
+echo "Skipping static files collection due to permission issues..."
+echo "Media files will be served directly from /app/media/"
 
 echo "Seeding database..."
 python manage.py seed
