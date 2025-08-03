@@ -21,7 +21,7 @@ cd portfolio
 -   **Main app:** http://localhost
 -   **Frontend:** http://localhost:3000
 -   **Backend API:** http://localhost:8000
--   **Admin panel:** http://localhost/kushums921/
+-   **Admin panel:** http://localhost/admin/
 
 ## Architecture
 

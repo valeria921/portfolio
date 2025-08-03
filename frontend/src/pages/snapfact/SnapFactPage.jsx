@@ -178,7 +178,7 @@ const SnapFactPage = () => {
 						🔗 Find me on LinkedIn
 					</Link>
 					<Link
-						href='https://github.com/valeria921/SnapFact'
+						href='https://github.com/valeria921/portfolio'
 						isExternal
 						target='_blank'
 						color='#495963'

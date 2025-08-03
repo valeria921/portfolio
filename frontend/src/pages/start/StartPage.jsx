@@ -201,7 +201,7 @@ const StartPage = () => {
 								</ul>
 								<a
 									class='button'
-									href='https://github.com/valeria921/'
+									href='https://github.com/valeria921/car_wash_manager'
 									target='_blank'
 									rel='noopener noreferrer'
 								>
@@ -221,7 +221,7 @@ const StartPage = () => {
 								</p>
 								<a
 									class='button'
-									href='https://github.com/valeria921/'
+									href='https://github.com/valeria921/portfolio'
 									target='_blank'
 									rel='noopener noreferrer'
 								>
