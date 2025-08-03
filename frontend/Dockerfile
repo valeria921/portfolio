@@ -4,18 +4,23 @@ FROM node:18-alpine AS build
 # Set working directory
 WORKDIR /app
 
+# Set Node.js memory limits to prevent OOM
+ENV NODE_OPTIONS="--max-old-space-size=512"
+ENV GENERATE_SOURCEMAP=false
+ENV CI=false
+
 # Copy package files first
 COPY package.json ./
 COPY package-lock.json* ./
 
-# Install dependencies
-RUN npm install --omit=dev
+# Install dependencies with memory optimization
+RUN npm install --omit=dev --no-audit --no-fund --prefer-offline
 
 # Copy source code
 COPY . .
 
-# Build the application
-RUN npm run build
+# Build the application with memory optimization
+RUN npm run build:light
 
 # Stage 2: Serve the application with Nginx
 FROM nginx:alpine
