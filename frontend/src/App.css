@@ -1,0 +1,28 @@
+.start-body {
+  background-color: white;
+}
+
+.snapfact-body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #FBF6ED;;
+  padding-bottom: 80px;
+}
+
+.stock-body {
+	background-color: #212529;
+}
+
+.stock-root {
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+}
+
+html {
+  background-color: white;
+}

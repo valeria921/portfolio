@@ -1,0 +1,147 @@
+.introduction {
+	padding: 150px 30px 30px 30px;
+	background-color: #f7f7f7;
+	justify-content: center;
+}
+
+.introduction-block {
+	max-width: 1100px;
+	display: flex;
+	justify-content: space-between;
+	flex-wrap: wrap;
+	margin-bottom: 30px;
+}
+
+.introduction-block__photo {
+	width: 270px;
+	height: 270px;
+	position: relative;
+	flex-shrink: 0;
+	margin-right: 60px;
+}
+
+.introduction-block__photo div {
+	width: 100%;
+	height: 100%;
+	background-color: #dccfc0;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	z-index: 1;
+}
+
+.introduction-block__photo img {
+	width: 270px;
+	height: auto;
+	position: absolute;
+	top: 15px;
+	left: 15px;
+	z-index: 2;
+}
+
+.introduction-block__description {
+	flex: 1;
+	max-width: 700px;
+}
+
+.intro-heading {
+	display: inline-block;
+	text-align: right;
+	margin-bottom: 15px;
+}
+
+.introduction-block__description h1 {
+	font-family: 'DM Serif Display', serif;
+	/* text-transform: uppercase; */
+	font-weight: 300;
+	font-size: 18px;
+	margin-bottom: -7px;
+	padding: 0;
+}
+
+.introduction-block__description h2 {
+	font-family: 'DM Serif Display', serif;
+	text-transform: uppercase;
+	font-weight: 700;
+	font-size: 50px;
+	letter-spacing: 2px;
+	margin: 0;
+	padding: 0;
+}
+
+.introduction-block__description p {
+	margin-bottom: 10px;
+}
+
+.introduction-block__contact {
+	display: flex;
+	justify-content: start;
+	gap: 20px;
+	flex-wrap: wrap;
+	padding-top: 20px;
+}
+
+.introduction-block__contact a,
+.introduction-block__contact p {
+	color: #393e46;
+	font-weight: 500;
+	transition: color 0.3s ease;
+	cursor: pointer;
+}
+
+.introduction-block__contact a:hover {
+	color: #222831;
+	text-decoration:underline;
+}
+
+.introduction-block__contact p:hover {
+	color: #222831;
+	text-decoration:underline;
+}
+
+@media (max-width: 768px) {
+	.introduction {
+		padding: 35px 15px 20px 15px;
+	}
+	.introduction-block {
+		flex-direction: column;
+		align-items: flex-start;
+	}
+
+	.introduction-block__photo {
+		width: 170px;
+		height: 170px;
+		margin-bottom: 30px;
+	}
+	.introduction-block__photo img {
+		width: 170px;
+		height: auto;
+		position: absolute;
+		top: 10px;
+		left: 10px;
+		z-index: 2;
+	}
+
+	.intro-heading {
+		display: inline-block;
+		text-align: right;
+		margin-bottom: 10px;
+	}
+
+	.introduction-block__description h1 {
+		font-size: 15px;
+		margin-bottom: -7px;
+		padding: 0;
+	}
+
+	.introduction-block__description h2 {
+		font-size: 40px;
+		margin: 0;
+		padding: 0;
+	}
+
+	.introduction-block__description p,
+	.introduction-block__contact p {
+		font-size: 14px;
+	}
+}
