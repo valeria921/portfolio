@@ -19,23 +19,21 @@ export const Toaster = () => {
     <Portal>
       <ChakraToaster toaster={toaster} insetInline={{ mdDown: '4' }}>
         {(toast) => (
-          <Toast.Root width={{ md: 'sm' }}>
+          <Toast width={{ md: 'sm' }}>
             {toast.type === 'loading' ? (
               <Spinner size='sm' color='blue.solid' />
-            ) : (
-              <Toast.Indicator />
-            )}
+            ) : null}
             <Stack gap='1' flex='1' maxWidth='100%'>
-              {toast.title && <Toast.Title>{toast.title}</Toast.Title>}
+              {toast.title && <div>{toast.title}</div>}
               {toast.description && (
-                <Toast.Description>{toast.description}</Toast.Description>
+                <div>{toast.description}</div>
               )}
             </Stack>
             {toast.action && (
-              <Toast.ActionTrigger>{toast.action.label}</Toast.ActionTrigger>
+              <button>{toast.action.label}</button>
             )}
-            {toast.closable && <Toast.CloseTrigger />}
-          </Toast.Root>
+            {toast.closable && <button>×</button>}
+          </Toast>
         )}
       </ChakraToaster>
     </Portal>
