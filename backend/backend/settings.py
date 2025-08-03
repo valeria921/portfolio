@@ -169,4 +169,11 @@ SIMPLE_JWT = {
 
 # Media files config
 MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR /'media'
+MEDIA_ROOT = BASE_DIR / 'media'
+
+# Ensure media files are served in production
+if not DEBUG:
+    # Add media files to static files for production serving
+    STATICFILES_DIRS = [
+        BASE_DIR / "media",
+    ]

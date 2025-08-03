@@ -30,7 +30,10 @@ echo "Running migrations..."
 python manage.py migrate --noinput
 
 echo "Collecting static files..."
-python manage.py collectstatic --noinput || echo "Static files collection failed, continuing..."
+python manage.py collectstatic --noinput --clear || echo "Static files collection failed, continuing..."
+
+echo "Copying media files to static..."
+cp -r /app/media/* /app/staticfiles/media/ 2>/dev/null || echo "Media files copy failed, continuing..."
 
 echo "Seeding database..."
 python manage.py seed
