@@ -36,6 +36,9 @@ echo "Copying media files to static..."
 mkdir -p /app/staticfiles/media
 cp -r /app/media/* /app/staticfiles/media/ 2>/dev/null || echo "Media files copy failed, continuing..."
 
+echo "Fixing permissions..."
+chown -R appuser:appuser /app/staticfiles
+
 echo "Seeding database..."
 python manage.py seed
 

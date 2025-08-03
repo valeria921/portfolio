@@ -32,6 +32,9 @@ WORKDIR /app
  
 # Copy application code
 COPY --chown=appuser:appuser . .
+
+# Create staticfiles directory with proper permissions
+RUN mkdir -p /app/staticfiles && chown -R appuser:appuser /app/staticfiles
  
 # Set environment variables to optimize Python
 ENV PYTHONDONTWRITEBYTECODE=1
