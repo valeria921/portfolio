@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 set -e
 
 echo "Waiting for database..."
@@ -26,13 +26,14 @@ END
 
 echo "Database is ready"
 
-python manage.py migrate
+echo "Running migrations..."
+python manage.py migrate --noinput
 
-# Attempt to create superuser, ignore error if already exists
-python manage.py createsuperuser --noinput || true
-
-python manage.py seed
-
+echo "Collecting static files..."
 python manage.py collectstatic --noinput
 
+echo "Seeding database..."
+python manage.py seed
+
+echo "Starting Gunicorn server..."
 python -m gunicorn --bind 0.0.0.0:8000 --workers 3 backend.wsgi:application

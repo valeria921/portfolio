@@ -83,8 +83,7 @@ class StockPredictionAPIView(APIView):
             scaler = MinMaxScaler(feature_range=(0,1))
 
             # Load ML Model
-            project_root = os.path.dirname(settings.BASE_DIR)
-            model_path = os.path.join(project_root, 'resources', 'stock_prediction_model.keras')
+            model_path = os.path.join(settings.BASE_DIR, 'resources', 'stock_prediction_model.keras')
             model = load_model(model_path)
 
             # Prepare test data
