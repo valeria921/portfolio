@@ -15,7 +15,7 @@ const Dashboard = () => {
 	const [rmse, setRMSE] = useState(null);
 	const [r2, setR2] = useState(null);
 
-	const backendRoot = 'http://127.0.0.1:8000'; // move to .env later
+	const backendRoot = process.env.REACT_APP_API_URL?.replace('/api', '') || 'http://127.0.0.1:8000'; // move to .env later
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
