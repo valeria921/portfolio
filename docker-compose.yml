@@ -31,9 +31,9 @@ services:
         deploy:
             resources:
                 limits:
-                    memory: 800M
+                    memory: 600M
                 reservations:
-                    memory: 400M
+                    memory: 300M
 
     # React Frontend
     frontend:

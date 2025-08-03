@@ -36,4 +36,4 @@ echo "Seeding database..."
 python manage.py seed
 
 echo "Starting Gunicorn server..."
-python -m gunicorn --bind 0.0.0.0:8000 --workers 3 backend.wsgi:application
+python -m gunicorn --bind 0.0.0.0:8000 --workers 1 --timeout 300 --max-requests 1000 backend.wsgi:application
