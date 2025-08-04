@@ -4,6 +4,10 @@ services:
         image: postgres:15-alpine
         env_file:
             - ./backend/.env.prod
+        environment:
+            POSTGRES_USER: ${DATABASE_USERNAME}
+            POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+            POSTGRES_DB: ${DATABASE_NAME}
         volumes:
             - postgres_data:/var/lib/postgresql/data
         healthcheck:
