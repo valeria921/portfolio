@@ -1,9 +1,9 @@
 services:
     # PostgreSQL Database
     db:
-        image: postgres:15-alpine
         env_file:
             - ./backend/.env.prod
+        image: postgres:15-alpine
         environment:
             POSTGRES_USER: ${DATABASE_USERNAME}
             POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
