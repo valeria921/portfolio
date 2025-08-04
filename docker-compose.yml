@@ -51,7 +51,7 @@ services:
         volumes:
             - ./certbot/conf:/etc/letsencrypt
             - ./certbot/www:/var/www/certbot
-        command: certonly --webroot -w /var/www/certbot --force-renewal --email valeria.kruk921@gmail.com -d idonotlikedocker.com --agree-tos
+        command: certonly --standalone -d idonotlikedocker.com -d www.idonotlikedocker.com --email valeria.kruk921@gmail.com --agree-tos --force-renewal
 
 volumes:
     postgres_data:
