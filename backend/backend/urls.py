@@ -22,7 +22,7 @@ else:
     urlpatterns += [
         path('media/<path:path>', serve, {'document_root': settings.MEDIA_ROOT}),
         path('images/<path:path>', serve, {'document_root': settings.STATIC_ROOT / 'images'}),
-        path('static/<path:path>', serve, {'document_root': settings.STATIC_ROOT}),
+        path('static/<path:path>', serve, {'document_root': settings.STATIC_ROOT / 'react'}),
     ]
 
 # Serve React app - catch all other URLs (but not static files)
