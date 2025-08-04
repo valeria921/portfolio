@@ -38,11 +38,4 @@ echo "Seeding database..."
 python manage.py seed
 
 echo "Starting Gunicorn server..."
-# Check if SSL certificates exist, if not run without SSL
-if [ -f "/etc/letsencrypt/live/idonotlikedocker.com/fullchain.pem" ]; then
-    echo "SSL certificates found, starting with HTTPS..."
-    python -m gunicorn --bind 0.0.0.0:8000 --workers 1 --timeout 300 --max-requests 1000 --certfile=/etc/letsencrypt/live/idonotlikedocker.com/fullchain.pem --keyfile=/etc/letsencrypt/live/idonotlikedocker.com/privkey.pem backend.wsgi:application
-else
-    echo "SSL certificates not found, starting with HTTP only..."
-    python -m gunicorn --bind 0.0.0.0:8000 --workers 1 --timeout 300 --max-requests 1000 backend.wsgi:application
-fi
+python -m gunicorn --bind 0.0.0.0:8000 --workers 1 --timeout 300 --max-requests 1000 --certfile=/etc/letsencrypt/live/idonotlikedocker.com/fullchain.pem --keyfile=/etc/letsencrypt/live/idonotlikedocker.com/privkey.pem backend.wsgi:application

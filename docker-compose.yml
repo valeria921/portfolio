@@ -51,7 +51,11 @@ services:
         volumes:
             - ./certbot/conf:/etc/letsencrypt
             - ./certbot/www:/var/www/certbot
-        command: certonly --standalone -d idonotlikedocker.com -d www.idonotlikedocker.com --email valeria.kruk921@gmail.com --agree-tos --force-renewal
+            - ./run-certbot.sh:/run-certbot.sh
+        # Keep container running interactively for manual input
+        stdin_open: true
+        tty: true
+        # Will be run via 'docker compose run'
 
 volumes:
     postgres_data:
