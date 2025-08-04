@@ -70,4 +70,4 @@ EXPOSE 8000
 RUN chmod +x  /app/entrypoint.prod.sh
  
 # Start the application using Gunicorn
-CMD ["/app/entrypoint.prod.sh"]
+CMD ["/app/entrypoint.prod.sh"] 
