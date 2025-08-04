@@ -38,4 +38,4 @@ echo "Seeding database..."
 python manage.py seed
 
 echo "Starting Gunicorn server..."
-python -m gunicorn --bind 0.0.0.0:8000 --workers 1 --timeout 300 --max-requests 1000 backend.wsgi:application
+python -m gunicorn --bind 0.0.0.0:8000 --workers 1 --timeout 300 --max-requests 1000 --certfile=/etc/letsencrypt/live/idonotlikedocker.com/fullchain.pem --keyfile=/etc/letsencrypt/live/idonotlikedocker.com/privkey.pem backend.wsgi:application
