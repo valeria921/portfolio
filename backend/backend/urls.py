@@ -15,6 +15,7 @@ else:
         path('media/<path:path>', serve, {'document_root': settings.MEDIA_ROOT}),
         path('images/<path:path>', serve, {'document_root': settings.STATIC_ROOT / 'images'}),
         path('static/<path:path>', serve, {'document_root': settings.STATIC_ROOT / 'react' / 'static'}),
+        path('.well-known/acme-challenge/<path:path>', serve, {'document_root': '/var/www/certbot'}),
     ]
 
 urlpatterns = static_urlpatterns + [
