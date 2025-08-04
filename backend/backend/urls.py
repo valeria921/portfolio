@@ -25,8 +25,8 @@ else:
         path('static/<path:path>', serve, {'document_root': settings.STATIC_ROOT}),
     ]
 
-# Serve React app - catch all other URLs
+# Serve React app - catch all other URLs (but not static files)
 urlpatterns += [
-    re_path(r'^.*$', serve_react, name='react_app'),
+    re_path(r'^(?!media/|images/|static/|api/|admin/).*$', serve_react, name='react_app'),
 ]
 
