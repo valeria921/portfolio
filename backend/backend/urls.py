@@ -21,6 +21,8 @@ else:
     from django.views.static import serve
     urlpatterns += [
         path('media/<path:path>', serve, {'document_root': settings.MEDIA_ROOT}),
+        path('images/<path:path>', serve, {'document_root': settings.STATIC_ROOT / 'images'}),
+        path('static/<path:path>', serve, {'document_root': settings.STATIC_ROOT}),
     ]
 
 # Serve React app - catch all other URLs
