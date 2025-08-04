@@ -26,10 +26,10 @@ const Dashboard = () => {
 			const response = await predictTicker(ticker);
 			const data = response.data;
 
-			setPlot(backendRoot + data.plot_img);
-			setMA100(backendRoot + data.plot_100_dma);
-			setMA200(backendRoot + data.plot_200_dma);
-			setPrediction(backendRoot + data.plot_prediction);
+			setPlot(data.plot_img);
+			setMA100(data.plot_100_dma);
+			setMA200(data.plot_200_dma);
+			setPrediction(data.plot_prediction);
 			setMSE(data.mse);
 			setRMSE(data.rmse);
 			setR2(data.r2);
