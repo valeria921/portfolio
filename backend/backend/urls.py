@@ -17,13 +17,12 @@ else:
         path('static/<path:path>', serve, {'document_root': settings.STATIC_ROOT / 'react' / 'static'}),
     ]
 
-urlpatterns = [
+urlpatterns = static_urlpatterns + [
     path(os.getenv('ADMIN_URL', 'admin/'), admin.site.urls),
     path('api/', include('facts.urls')),
     path('api/', include('users.urls')),
     path('api/', include('stocks.urls')),
-] + static_urlpatterns + [
     # Serve React app - catch all other URLs (but not static files)
-    re_path(r'^(?!media/|images/|static/|api/|admin/).*$', serve_react, name='react_app'),
+    re_path(r'^(?!media/|images/|static/|api/|admin/|favicon\.ico).*$', serve_react, name='react_app'),
 ]
 
