@@ -1,6 +1,6 @@
 # Portfolio Website
 
-Hi, I’m Valeria 👩‍💻✨ Full-stack Django & React application with production deployment showing my built projects.
+Hi, I’m Valeria 👩‍💻✨ This is my full-stack Django & React application with production deployment showing my built projects.
 
 ## 🚀 Check Website
 
