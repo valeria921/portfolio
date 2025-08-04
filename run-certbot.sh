@@ -11,7 +11,6 @@ certbot certonly \
     --agree-tos \
     --no-eff-email \
     --rsa-key-size 4096 \
-    --manual-public-ip-logging-ok \
     -d idonotlikedocker.com \
     -d www.idonotlikedocker.com
 
