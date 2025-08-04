@@ -18,6 +18,11 @@ def serve_react(request, path=''):
     # Try to serve the file from React build directory
     file_path = os.path.join(settings.STATIC_ROOT, 'react', path)
     
+    # If not found in react, try images directory
+    if not os.path.exists(file_path) or not os.path.isfile(file_path):
+        if path.startswith('images/'):
+            file_path = os.path.join(settings.STATIC_ROOT, path)
+    
     if os.path.exists(file_path) and os.path.isfile(file_path):
         with open(file_path, 'rb') as f:
             content = f.read()

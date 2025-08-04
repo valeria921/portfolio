@@ -52,6 +52,9 @@ COPY --chown=appuser:appuser backend/ .
  
 # Copy React build from react-builder stage
 COPY --from=react-builder --chown=appuser:appuser /app/frontend/build /app/staticfiles/react
+
+# Copy frontend public images to static files
+COPY --chown=appuser:appuser frontend/public/images /app/staticfiles/images
  
 # Create staticfiles directory with proper permissions
 RUN mkdir -p /app/staticfiles && chown -R appuser:appuser /app/staticfiles && chmod -R 755 /app/staticfiles
