@@ -47,7 +47,7 @@ const StartPage = () => {
 									<h2>Hello</h2>
 								</div>
 								<p>
-									I'm Valeria — a junior developer with a
+									I'm Valeria — a developer with a
 									strong focus on backend development using{' '}
 									<span class='bold-text'>
 										Python, Django, and Django REST
@@ -71,7 +71,7 @@ const StartPage = () => {
 								<p>
 									I'm currently{' '}
 									<span class='bold-text'>
-										looking for a junior developer role
+										looking for a developer role
 									</span>{' '}
 									where I can grow alongside a team, take on
 									meaningful challenges, and contribute with
@@ -122,7 +122,7 @@ const StartPage = () => {
 									<li>Django & Django REST Framework</li>
 									<li>React.js + Chakra UI</li>
 									<li>PostgreSQL</li>
-									<li>Docker, Nginx, Certbot</li>
+									<li>Docker, Certbot</li>
 									<li>Deployed on DigitalOcean</li>
 								</ul>
 								<a class='button' href='/snapfact'>
@@ -148,7 +148,7 @@ const StartPage = () => {
 										Jupyter Notebook for building the LSTM
 										model
 									</li>
-									<li>Docker, Nginx, Certbot</li>
+									<li>Docker, Certbot</li>
 									<li>Deployed on DigitalOcean</li>
 								</ul>
 								<a class='button' href='/stocks'>

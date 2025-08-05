@@ -15,11 +15,10 @@ const Login = () => {
 	const navigate = useNavigate();
 
 	const handleLogin = async (e) => {
-		e.preventDefault();
+		e?.preventDefault();
 		setLoading(true);
 
 		const userData = { username, password };
-		console.log(userData);
 
 		try {
 			const response = await axios.post(
@@ -36,6 +35,12 @@ const Login = () => {
 		} finally {
 			setLoading(false);
 		}
+	};
+
+	const handleTestLogin = () => {
+		setUsername('user');
+		setPassword('user');
+		handleLogin();
 	};
 
 	return (
@@ -84,12 +89,21 @@ const Login = () => {
 									&nbsp; Logging in...
 								</button>
 							) : (
+								<>
 								<button
 									type='submit'
-									className='btn btn-info d-block mx-auto'
+									className='btn btn-info d-block mx-auto mb-3'
 								>
 									Log in
 								</button>
+								<button
+									type='button'
+									className='btn btn-warning d-block mx-auto fw-'
+									onClick={handleTestLogin}
+								>
+									Use Test Account
+								</button>
+								</>
 							)}
 						</form>
 					</div>

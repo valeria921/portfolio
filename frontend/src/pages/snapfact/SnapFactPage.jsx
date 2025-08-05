@@ -143,8 +143,9 @@ const SnapFactPage = () => {
 				mt='8'
 			>
 				<Flex
-					justify='center'
-					ml={{ base: '12', md: '0' }}
+					justify={{ base: 'flex-start', md: 'center' }} 
+					align='flex-start'
+					px={{ base: 12, md: 0 }}
 					gap={{ base: '2', md: '6' }}
 					wrap='wrap'
 					direction={{ base: 'column', md: 'row' }}
