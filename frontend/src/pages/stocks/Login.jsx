@@ -14,11 +14,14 @@ const Login = () => {
 
 	const navigate = useNavigate();
 
-	const handleLogin = async (e) => {
+	const handleLogin = async (e, customUsername = null, customPassword = null) => {
 		e?.preventDefault();
 		setLoading(true);
 
-		const userData = { username, password };
+		const userData = { 
+			username: customUsername || username, 
+			password: customPassword || password 
+		};
 
 		try {
 			const response = await axios.post(
@@ -40,7 +43,7 @@ const Login = () => {
 	const handleTestLogin = () => {
 		setUsername('user');
 		setPassword('user');
-		handleLogin();
+		handleLogin(null, 'user', 'user');
 	};
 
 	return (
