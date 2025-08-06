@@ -142,7 +142,10 @@ dist
 
 # Gatsby files
 .cache/
-public
+
+# Ignore public directories except images
+public/
+!frontend/public/images/
 
 # Storybook build outputs
 .out
