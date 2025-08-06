@@ -18,7 +18,6 @@ Hi, I’m Valeria 👩‍💻✨ This is my full-stack Django & React applicatio
 -   Production-ready with SSL certificates
 -   Automated deployment and maintenance
 
-
 ## 📞 Let's connect 📩
 
 -   **LinkedIn:** [www.linkedin.com/in/valeria-kruk]
