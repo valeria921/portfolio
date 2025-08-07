@@ -64,7 +64,7 @@ const Dashboard = () => {
 							<input
 								type='text'
 								className='form-control'
-								placeholder='Enter stock ticker'
+								placeholder='Enter stock ticker (e.g. GOOG, AAPL, TSLA, etc.)'
 								onChange={(e) => setTicker(e.target.value)}
 								required
 							/>

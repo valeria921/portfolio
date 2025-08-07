@@ -183,6 +183,7 @@ const StartPage = () => {
 							</div>
 							<div class='projects-block__project'>
 								<h3>Car Wash Manager 🚘</h3>
+								<p class="status-note">🚧 This project is still in development. You can check the code on GitHub.</p>
 								<p>
 									A Django-based web app to manage and
 									automate car wash business operations —
@@ -205,7 +206,7 @@ const StartPage = () => {
 									target='_blank'
 									rel='noopener noreferrer'
 								>
-									Check project
+									🛠 View Code
 								</a>
 							</div>
 							<div class='projects-block__project'>
@@ -225,7 +226,7 @@ const StartPage = () => {
 									target='_blank'
 									rel='noopener noreferrer'
 								>
-									View code on GitHub
+									🛠 View Code
 								</a>
 							</div>
 						</div>

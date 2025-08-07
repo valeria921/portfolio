@@ -31,3 +31,8 @@ a {
 .bold-text {
   font-weight: 700;
 }
+
+.status-note {
+	font-style: italic;
+	
+}
