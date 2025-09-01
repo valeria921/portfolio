@@ -14,6 +14,9 @@ RUN sed -i '/tensorflow==/d' requirements.txt && \
 # Copy backend code
 COPY --chown=appuser:appuser . .
 
+# Explicitly ensure the model file is copied
+COPY --chown=appuser:appuser resources/stock_prediction_model.keras ./resources/stock_prediction_model.keras
+
 # Prepare static & media
 RUN mkdir -p /app/backend/staticfiles /var/www/media && \
     chown -R appuser:appuser /app/backend/staticfiles /var/www/media
