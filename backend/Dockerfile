@@ -7,12 +7,12 @@ RUN useradd -m -r appuser && mkdir /app && chown -R appuser /app
 WORKDIR /app/backend
 
 # Install Python dependencies (exclude tensorflow/keras)
-COPY backend/requirements.txt .
+COPY requirements.txt .
 RUN sed -i '/tensorflow==/d' requirements.txt && \
     sed -i '/keras==/d' requirements.txt && \
     pip install --no-cache-dir -r requirements.txt
 
-COPY --chown=appuser:appuser backend/ .
+COPY --chown=appuser:appuser . .
 
 # Static and media
 RUN mkdir -p /app/backend/staticfiles /var/www/media && \
