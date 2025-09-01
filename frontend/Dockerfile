@@ -8,10 +8,10 @@ ENV GENERATE_SOURCEMAP=false
 ENV CI=false
 
 COPY package*.json ./
-RUN npm install --omit=dev --no-audit --no-fund --prefer-offline --no-optional --production
+RUN npm install --no-audit --no-fund
 
 COPY . .
-RUN npm run build:ultra
+RUN npm run build
 
 # Stage 2: Nginx
 FROM nginx:alpine
