@@ -11,7 +11,7 @@ COPY package*.json ./
 RUN npm install --no-audit --no-fund
 
 COPY . .
-RUN npm run build
+RUN npm run build:ultra
 
 # Stage 2: Nginx
 FROM nginx:alpine
