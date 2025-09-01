@@ -1,23 +1,17 @@
 version: "3.9"
 
-services:
-  # PostgreSQL
-  db:
-    image: postgres:15-alpine
-    env_file:
-        - ./backend/.env.prod
-    environment:
-        POSTGRES_USER: ${POSTGRES_USER}
-        POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-        POSTGRES_DB: ${POSTGRES_DB}
-    volumes:
-        - postgres_data:/var/lib/postgresql/data
-    healthcheck:
-        test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
-        interval: 10s
-        timeout: 5s
-        retries: 5
-    restart: unless-stopped
+db:
+  image: postgres:15-alpine
+  env_file:
+    - ./backend/.env.prod
+  volumes:
+    - postgres_data:/var/lib/postgresql/data
+  healthcheck:
+    test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+    interval: 10s
+    timeout: 5s
+    retries: 5
+  restart: unless-stopped
 
   # Django backend
   backend:
