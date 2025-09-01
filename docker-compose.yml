@@ -1,5 +1,6 @@
+version: "3.9"
+
 services:
-  # PostgreSQL Database
   db:
     env_file:
       - ./backend/.env.prod
@@ -17,9 +18,10 @@ services:
       retries: 5
     restart: unless-stopped
 
-  # Django Backend (API only)
   backend:
-    build: .
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
     env_file:
       - ./backend/.env.prod
     volumes:
@@ -27,37 +29,21 @@ services:
       - ./resources:/app/resources:ro
       - ./certbot/conf:/etc/letsencrypt
       - ./certbot/www:/var/www/certbot
-      - react_build:/app/backend/reactbuild
     depends_on:
       db:
         condition: service_healthy
     restart: unless-stopped
     expose:
       - '8000'
-    deploy:
-      resources:
-        limits:
-          memory: 800M
-        reservations:
-          memory: 400M
 
-  # Nginx (serves React frontend and proxies API)
-  nginx:
-    image: nginx:alpine
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
     ports:
-      - '80:80'
-      - '443:443'
-    volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf:ro
-      - ./certbot/conf:/etc/letsencrypt:ro
-      - ./certbot/www:/var/www/certbot:ro
-      - react_build:/var/www/react
-    depends_on:
-      - backend
+      - "80:80"
     restart: unless-stopped
-    entrypoint: /bin/sh -c "cp -r /app/backend/reactbuild/* /var/www/react && nginx -g 'daemon off;'"
 
-  # Certbot for SSL certificates
   certbot:
     image: certbot/certbot
     volumes:
@@ -70,4 +56,3 @@ services:
 volumes:
   postgres_data:
   backend_media:
-  react_build:
