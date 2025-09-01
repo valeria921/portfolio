@@ -22,7 +22,7 @@ FROM python:3.11-slim AS python-builder
 RUN mkdir /app
  
 # Set the working directory
-WORKDIR /app/backend
+WORKDIR /app
  
 # Set environment variables to optimize Python
 ENV PYTHONDONTWRITEBYTECODE=1
