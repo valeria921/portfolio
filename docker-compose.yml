@@ -1,10 +1,8 @@
-version: "3.9"
-
 services:
   db:
+    image: postgres:15-alpine
     env_file:
       - ./backend/.env.prod
-    image: postgres:15-alpine
     environment:
       POSTGRES_USER: ${DATABASE_USERNAME}
       POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
@@ -21,7 +19,6 @@ services:
   backend:
     build:
       context: ./backend
-      dockerfile: Dockerfile
     env_file:
       - ./backend/.env.prod
     volumes:
@@ -32,16 +29,21 @@ services:
     depends_on:
       db:
         condition: service_healthy
-    restart: unless-stopped
     expose:
       - '8000'
+    restart: unless-stopped
 
-  frontend:
+  nginx:
     build:
       context: ./frontend
-      dockerfile: Dockerfile
     ports:
-      - "80:80"
+      - '80:80'
+      - '443:443'
+    volumes:
+      - ./certbot/conf:/etc/letsencrypt:ro
+      - ./certbot/www:/var/www/certbot:ro
+    depends_on:
+      - backend
     restart: unless-stopped
 
   certbot:
