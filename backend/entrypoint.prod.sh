@@ -38,4 +38,15 @@ echo "Seeding database..."
 python manage.py seed
 
 echo "Starting Gunicorn server..."
-python -m gunicorn --bind 0.0.0.0:8000 --workers 1 --timeout 300 --max-requests 1000 --certfile=/etc/letsencrypt/live/idonotlikedocker.com/fullchain.pem --keyfile=/etc/letsencrypt/live/idonotlikedocker.com/privkey.pem backend.wsgi:application
+# Increase concurrency a bit while staying memory-conscious (TensorFlow loaded)
+python -m gunicorn \
+    --bind 0.0.0.0:8000 \
+    --workers 2 \
+    --threads 2 \
+    --timeout 120 \
+    --keep-alive 10 \
+    --max-requests 1000 \
+    --max-requests-jitter 100 \
+    --certfile=/etc/letsencrypt/live/idonotlikedocker.com/fullchain.pem \
+    --keyfile=/etc/letsencrypt/live/idonotlikedocker.com/privkey.pem \
+    backend.wsgi:application

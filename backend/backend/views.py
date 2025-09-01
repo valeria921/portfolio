@@ -15,8 +15,8 @@ def serve_react(request, path=''):
     if not path:
         path = 'index.html'
     
-    # Try to serve the file from React build directory
-    file_path = os.path.join(settings.STATIC_ROOT, 'react', path)
+    # Try to serve the file from React build directory copied into STATICFILES_DIRS
+    file_path = os.path.join(settings.BASE_DIR, 'reactbuild', path)
     
     # If not found in react, try images directory
     if not os.path.exists(file_path) or not os.path.isfile(file_path):
@@ -45,7 +45,7 @@ def serve_react(request, path=''):
         return HttpResponse(content, content_type=content_type)
     
     # If file doesn't exist, serve index.html (for React Router)
-    index_path = os.path.join(settings.STATIC_ROOT, 'react', 'index.html')
+    index_path = os.path.join(settings.BASE_DIR, 'reactbuild', 'index.html')
     if os.path.exists(index_path):
         with open(index_path, 'rb') as f:
             content = f.read()

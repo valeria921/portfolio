@@ -50,14 +50,11 @@ WORKDIR /app
 # Copy Django application code
 COPY --chown=appuser:appuser backend/ .
  
-# Copy React build from react-builder stage
-COPY --from=react-builder --chown=appuser:appuser /app/frontend/build /app/staticfiles/react
-
-# Copy frontend public images to static files
-COPY --chown=appuser:appuser frontend/public/images /app/staticfiles/images
+# Copy React build from react-builder stage into a directory collected by Django
+COPY --from=react-builder --chown=appuser:appuser /app/frontend/build /app/backend/reactbuild
  
-# Create staticfiles directory with proper permissions
-RUN mkdir -p /app/staticfiles && chown -R appuser:appuser /app/staticfiles && chmod -R 755 /app/staticfiles
+# Ensure Django static root exists with proper permissions
+RUN mkdir -p /app/backend/staticfiles && chown -R appuser:appuser /app/backend/staticfiles && chmod -R 755 /app/backend/staticfiles
  
 # Set environment variables to optimize Python
 ENV PYTHONDONTWRITEBYTECODE=1

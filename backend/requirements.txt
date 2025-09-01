@@ -12,6 +12,7 @@ python-dotenv==1.1.1
 
 # Production server
 gunicorn==23.0.0
+whitenoise==6.7.0
 
 # Stock prediction app dependencies
 yfinance==0.2.65

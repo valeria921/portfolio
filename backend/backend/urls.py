@@ -6,15 +6,13 @@ from .views import serve_react
 import os
 
 # Serve media files in both development and production
+static_urlpatterns = []
 if settings.DEBUG:
-    static_urlpatterns = static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    static_urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 else:
-    # In production, serve media files directly
     from django.views.static import serve
-    static_urlpatterns = [
-        path('media/<path:path>', serve, {'document_root': settings.MEDIA_ROOT}),
-        path('images/<path:path>', serve, {'document_root': settings.STATIC_ROOT / 'images'}),
-        path('static/<path:path>', serve, {'document_root': settings.STATIC_ROOT / 'react' / 'static'}),
+    # Still expose certbot challenges if needed; media served by WhiteNoise not necessary
+    static_urlpatterns += [
         path('.well-known/acme-challenge/<path:path>', serve, {'document_root': '/var/www/certbot'}),
     ]
 
@@ -23,7 +21,7 @@ urlpatterns = static_urlpatterns + [
     path('api/', include('facts.urls')),
     path('api/', include('users.urls')),
     path('api/', include('stocks.urls')),
-    # Serve React app - catch all other URLs (but not static files)
-    re_path(r'^(?!media/|images/|static/|api/|admin/|favicon\.ico).*$', serve_react, name='react_app'),
+    # Serve React app - catch all other URLs (but not API or admin)
+    re_path(r'^(?!api/|admin/|favicon\.ico).*$', serve_react, name='react_app'),
 ]
 
