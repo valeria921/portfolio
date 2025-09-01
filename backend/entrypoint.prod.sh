@@ -32,14 +32,6 @@ echo "Database is ready"
 echo "Running migrations..."
 python manage.py migrate --noinput
 
-echo "Collecting static files..."
-python manage.py collectstatic --noinput || echo "Static files collection failed, continuing..."
-
-echo "Media files will be served directly from /app/media/"
-
-echo "Seeding database..."
-python manage.py seed
-
 echo "Starting Gunicorn server..."
 # Increase concurrency a bit while staying memory-conscious (TensorFlow loaded)
 python -m gunicorn \
