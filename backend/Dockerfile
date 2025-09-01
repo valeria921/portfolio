@@ -14,9 +14,6 @@ RUN sed -i '/tensorflow==/d' requirements.txt && \
 # Copy backend code
 COPY --chown=appuser:appuser . .
 
-# Debug: List what was copied to resources
-RUN ls -la ./resources/ || echo "resources directory not found"
-
 # Prepare static & media
 RUN mkdir -p /app/backend/staticfiles /var/www/media && \
     chown -R appuser:appuser /app/backend/staticfiles /var/www/media

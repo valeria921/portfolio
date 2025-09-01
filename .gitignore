@@ -160,7 +160,7 @@ temp/
 docker-compose.override.yml
 
 # ML Models and Data
-*.keras
+# *.keras - Commented out to allow model files to be tracked
 *.h5
 *.pkl
 *.joblib
