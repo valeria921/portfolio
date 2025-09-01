@@ -22,7 +22,7 @@ FROM python:3.11-slim AS python-builder
 RUN mkdir /app
  
 # Set the working directory
-WORKDIR /app
+WORKDIR /app/backend
  
 # Set environment variables to optimize Python
 ENV PYTHONDONTWRITEBYTECODE=1
@@ -45,7 +45,7 @@ COPY --from=python-builder /usr/local/lib/python3.11/site-packages/ /usr/local/l
 COPY --from=python-builder /usr/local/bin/ /usr/local/bin/
  
 # Set the working directory
-WORKDIR /app
+WORKDIR /app/backend
  
 # Copy Django application code
 COPY --chown=appuser:appuser backend/ .

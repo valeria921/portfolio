@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 set -e
 
+# Set Django settings module
+export DJANGO_SETTINGS_MODULE=backend.settings
+
 echo "Waiting for database..."
 python << END
 import time
