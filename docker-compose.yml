@@ -31,6 +31,7 @@ services:
             - ./resources:/app/resources:ro
             - ./certbot/conf:/etc/letsencrypt
             - ./certbot/www:/var/www/certbot
+            - react_build:/var/www/react
         depends_on:
             db:
                 condition: service_healthy
@@ -73,3 +74,4 @@ services:
 volumes:
     postgres_data:
     backend_media:
+    react_build:
