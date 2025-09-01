@@ -42,6 +42,4 @@ python -m gunicorn \
     --keep-alive 10 \
     --max-requests 1000 \
     --max-requests-jitter 100 \
-    --certfile=/etc/letsencrypt/live/idonotlikedocker.com/fullchain.pem \
-    --keyfile=/etc/letsencrypt/live/idonotlikedocker.com/privkey.pem \
     backend.wsgi:application
