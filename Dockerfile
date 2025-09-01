@@ -68,7 +68,7 @@ EXPOSE 8000
 EXPOSE 8443 
 
 # Make entry file executable
-RUN chmod +x  /app/entrypoint.prod.sh
+RUN chmod +x  /app/backend/entrypoint.prod.sh
  
 # Start the application using Gunicorn
-CMD ["/app/entrypoint.prod.sh"] 
+CMD ["/app/backend/entrypoint.prod.sh"] 
