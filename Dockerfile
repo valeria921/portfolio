@@ -54,7 +54,7 @@ WORKDIR /app/backend
 COPY --chown=appuser:appuser backend/ .
  
 # Copy React build from react-builder stage into a directory collected by Django
-COPY --from=react-builder --chown=appuser:appuser /app/frontend/build /var/www/react
+COPY --from=react-builder --chown=appuser:appuser /app/frontend/build /app/backend/reactbuild
 
 # Copy media files to Nginx accessible location
 RUN mkdir -p /var/www/media && chown -R appuser:appuser /var/www/media
