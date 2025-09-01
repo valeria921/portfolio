@@ -141,8 +141,13 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR / "staticfiles"
+# Use a separate prefix for Django static to avoid conflict with React
+STATIC_URL = '/django_static/'
+STATIC_ROOT = Path("/var/www/django_static/")
+
+# Media files (uploads)
+MEDIA_URL = '/media/'
+MEDIA_ROOT = Path("/var/www/media/")
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
@@ -171,14 +176,3 @@ SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=10),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
 }
-
-# Media files config
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
-
-# Ensure media files are served in production
-if not DEBUG:
-    # Add media files to static files for production serving
-    STATICFILES_DIRS = [
-        BASE_DIR / "media",
-    ]
