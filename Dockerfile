@@ -15,8 +15,8 @@ COPY frontend/ .
 # Build React app
 RUN npm run build:ultra
 
-# Stage 2: Python dependencies
-FROM python:3.11-slim AS python-builder
+# Stage 2: Python dependencies (using TensorFlow with Python 3.11)
+FROM tensorflow/tensorflow:latest AS python-builder
  
 # Create the app directory
 RUN mkdir /app
@@ -28,13 +28,16 @@ WORKDIR /app
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1 
  
-# Install dependencies first for caching benefit
+# Install Django dependencies (TensorFlow already included)
 RUN pip install --upgrade pip 
 COPY backend/requirements.txt /app/ 
-RUN pip install --no-cache-dir -r requirements.txt
+# Remove tensorflow from requirements since it's in base image
+RUN sed -i '/tensorflow==/d' requirements.txt && \
+    sed -i '/keras==/d' requirements.txt && \
+    pip install --no-cache-dir -r requirements.txt
  
 # Stage 3: Production stage
-FROM python:3.11-slim
+FROM tensorflow/tensorflow:latest
  
 RUN useradd -m -r appuser && \
    mkdir /app && \

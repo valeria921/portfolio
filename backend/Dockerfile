@@ -1,22 +1,5 @@
-# Stage 1: Build React app
-FROM node:18-alpine AS react-builder
-
-WORKDIR /app/frontend
-
-# Copy package files
-COPY frontend/package*.json ./
-
-# Install dependencies
-RUN npm install --omit=dev --no-audit --no-fund --prefer-offline --no-optional --production
-
-# Copy source code
-COPY frontend/ .
-
-# Build React app
-RUN npm run build:ultra
-
-# Stage 2: Python dependencies
-FROM python:3.11-slim AS python-builder
+# Stage 1: Python dependencies (using TensorFlow with Python 3.11)
+FROM tensorflow/tensorflow:latest AS python-builder
  
 # Create the app directory
 RUN mkdir /app
@@ -28,13 +11,16 @@ WORKDIR /app
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1 
  
-# Install dependencies first for caching benefit
+# Install Django dependencies (TensorFlow already included)
 RUN pip install --upgrade pip 
 COPY backend/requirements.txt /app/ 
-RUN pip install --no-cache-dir -r requirements.txt
+# Remove tensorflow from requirements since it's in base image
+RUN sed -i '/tensorflow==/d' requirements.txt && \
+    sed -i '/keras==/d' requirements.txt && \
+    pip install --no-cache-dir -r requirements.txt
  
-# Stage 3: Production stage
-FROM python:3.11-slim
+# Stage 2: Production stage
+FROM tensorflow/tensorflow:latest
  
 RUN useradd -m -r appuser && \
    mkdir /app && \
@@ -45,16 +31,13 @@ COPY --from=python-builder /usr/local/lib/python3.11/site-packages/ /usr/local/l
 COPY --from=python-builder /usr/local/bin/ /usr/local/bin/
  
 # Set the working directory
-WORKDIR /app
+WORKDIR /app/backend
  
 # Copy Django application code
 COPY --chown=appuser:appuser backend/ .
  
-# Copy React build from react-builder stage
-COPY --from=react-builder --chown=appuser:appuser /app/frontend/build /app/staticfiles/react
- 
-# Create staticfiles directory with proper permissions
-RUN mkdir -p /app/staticfiles && chown -R appuser:appuser /app/staticfiles && chmod -R 755 /app/staticfiles
+# Ensure Django static root exists with proper permissions
+RUN mkdir -p /app/backend/staticfiles && chown -R appuser:appuser /app/backend/staticfiles && chmod -R 755 /app/backend/staticfiles
  
 # Set environment variables to optimize Python
 ENV PYTHONDONTWRITEBYTECODE=1
@@ -67,7 +50,7 @@ USER appuser
 EXPOSE 8000 
 
 # Make entry file executable
-RUN chmod +x  /app/entrypoint.prod.sh
+RUN chmod +x  /app/backend/entrypoint.prod.sh
  
 # Start the application using Gunicorn
-CMD ["/app/entrypoint.prod.sh"]
+CMD ["/app/backend/entrypoint.prod.sh"]
