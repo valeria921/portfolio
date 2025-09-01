@@ -32,6 +32,9 @@ echo "Database is ready"
 echo "Running migrations..."
 python manage.py migrate --noinput
 
+echo "Seeding database with facts..."
+python manage.py seed
+
 echo "Starting Gunicorn server..."
 # Increase concurrency a bit while staying memory-conscious (TensorFlow loaded)
 python -m gunicorn \

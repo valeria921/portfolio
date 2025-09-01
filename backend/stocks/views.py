@@ -38,7 +38,7 @@ class StockPredictionAPIView(APIView):
             # Generate basic plot
             plt.switch_backend('AGG')
             plt.figure(figsize = (12,5))
-            plt.plot(df['Date'], df.Close, label = 'Closing price')
+            plt.plot(df['Date'], df['Close'], label = 'Closing price')
             plt.title(f'Closing price of {ticker}')
             plt.xlabel('Date')
             plt.ylabel('Close price')
@@ -49,10 +49,10 @@ class StockPredictionAPIView(APIView):
             plot_img = save_plot(plot_img_path)
 
             # 100 Days moving average
-            ma100 = df[('MA_100', ticker)] = df[('Close', ticker)].rolling(100).mean()
+            ma100 = df['Close'].rolling(100).mean()
             plt.switch_backend('AGG')
             plt.figure(figsize = (12,5))
-            plt.plot(df['Date'],df.Close, label = 'Closing price')
+            plt.plot(df['Date'], df['Close'], label = 'Closing price')
             plt.plot(df['Date'], ma100, 'r', label = '100 Days moving average')
             plt.title(f'100 Days moving average of {ticker}')
             plt.xlabel('Date')
@@ -62,10 +62,10 @@ class StockPredictionAPIView(APIView):
             plot_100_dma = save_plot(plot_img_path)
 
             # 200 Days moving average
-            ma200 = df[('MA_100', ticker)] = df[('Close', ticker)].rolling(200).mean()
+            ma200 = df['Close'].rolling(200).mean()
             plt.switch_backend('AGG')
             plt.figure(figsize = (12,5))
-            plt.plot(df['Date'], df.Close, label = 'Closing price')
+            plt.plot(df['Date'], df['Close'], label = 'Closing price')
             plt.plot(df['Date'], ma100, 'r', label = '100 Days moving average')
             plt.plot(df['Date'], ma200, 'g', label = '200 Days moving average')
             plt.title(f'200 Days moving average of {ticker}')
@@ -76,35 +76,54 @@ class StockPredictionAPIView(APIView):
             plot_200_dma = save_plot(plot_img_path)
 
             # Splitting data into training and testing datasets
-            data_training = pd.DataFrame(df.Close[0:int(len(df)*0.7)])
-            data_testing = pd.DataFrame(df.Close[int(len(df)*0.7):int(len(df))])
+            data_training = pd.DataFrame(df['Close'][0:int(len(df)*0.7)])
+            data_testing = pd.DataFrame(df['Close'][int(len(df)*0.7):int(len(df))])
 
             # Scaling down the data between 0 and 1
             scaler = MinMaxScaler(feature_range=(0,1))
 
-            # Load ML Model with aggressive memory optimization
+            # Load ML Model with error handling and memory optimization
             model_path = os.path.join(settings.BASE_DIR, 'resources', 'stock_prediction_model.keras')
             import tensorflow as tf
             import gc
+            import warnings
             
-            # Set memory growth to prevent OOM
-            gpus = tf.config.experimental.list_physical_devices('GPU')
-            if gpus:
-                try:
-                    for gpu in gpus:
-                        tf.config.experimental.set_memory_growth(gpu, True)
-                except RuntimeError as e:
-                    print(f"GPU memory growth setting failed: {e}")
-            
-            # Clear memory before loading model
-            gc.collect()
-            
-            # Load model with memory optimization
-            model = load_model(model_path, compile=False)
-            model.compile(optimizer='adam', loss='mse')
-            
-            # Clear memory after loading
-            gc.collect()
+            try:
+                # Suppress protobuf warnings that are causing noise
+                warnings.filterwarnings('ignore', category=UserWarning, module='google.protobuf')
+                
+                # Set memory growth to prevent OOM
+                gpus = tf.config.experimental.list_physical_devices('GPU')
+                if gpus:
+                    try:
+                        for gpu in gpus:
+                            tf.config.experimental.set_memory_growth(gpu, True)
+                    except RuntimeError as e:
+                        print(f"GPU memory growth setting failed: {e}")
+                
+                # Clear memory before loading model
+                gc.collect()
+                
+                # Check if model file exists
+                if not os.path.exists(model_path):
+                    return Response({
+                        'error': 'Model file not found. Please ensure the model is properly deployed.',
+                        'status': status.HTTP_500_INTERNAL_SERVER_ERROR
+                    })
+                
+                # Load model with memory optimization
+                model = load_model(model_path, compile=False)
+                model.compile(optimizer='adam', loss='mse')
+                
+                # Clear memory after loading
+                gc.collect()
+                
+            except Exception as e:
+                print(f"Error loading TensorFlow model: {str(e)}")
+                return Response({
+                    'error': f'Failed to load prediction model: {str(e)}',
+                    'status': status.HTTP_500_INTERNAL_SERVER_ERROR
+                })
 
             # Prepare test data
             past_100_days = data_training.tail(100)
